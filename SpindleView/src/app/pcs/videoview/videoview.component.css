@@ -1,0 +1,36 @@
+.layered {
+    display: grid;
+  
+    /* Set horizontal alignment of items in, case they have a different width. */
+    /* justify-items: start | end | center | stretch (default); */
+    justify-items: start;
+  
+    /* Set vertical alignment of items, in case they have a different height. */
+    /* align-items: start | end | center | stretch (default); */
+    align-items: start;
+    overflow: auto;
+    border: 2px solid;
+  }
+  
+  .layered > * {
+    grid-column-start: 1;
+    grid-row-start: 1;
+  }
+
+  .rotate0 {
+  }
+
+  .rotate90 {
+    transform: rotate(90deg) translateY(-100%);
+    transform-origin: top left;
+  }
+
+  .rotate180 {
+    transform: rotate(180deg);
+  }
+
+  .rotate270 {
+    transform: rotate(-90deg) translateX(-100%);
+    transform-origin: top left;
+  }
+

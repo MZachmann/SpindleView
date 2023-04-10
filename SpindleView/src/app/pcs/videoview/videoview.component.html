@@ -1,0 +1,4 @@
+<div class="layered" (click)="setClickPt($event)" id="VideoContainer" >
+        <img id="ImgView"  [src]="VideoUrl" (click)="setClickPt($event)" (load)="OnImgLoaded()" [class]="rotator" >
+        <reticle-view id="ReticleView" style="z-index: 10;"></reticle-view>
+</div>

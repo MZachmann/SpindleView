@@ -1,0 +1,30 @@
+<div style="display: {{isPanelVertical()}};">
+    <table style="width: min-content; padding-left: 10px;">
+        <tr><td style="vertical-align:top; width: min-content;">
+            <locate-panel></locate-panel>
+            <mat-divider></mat-divider>
+            <zooms-panel></zooms-panel>
+            <mat-divider></mat-divider>
+            <reticles-panel></reticles-panel>
+            <mat-divider></mat-divider>
+            <action-panel></action-panel>
+            <mat-divider></mat-divider>
+        </td></tr>
+    </table>
+</div>
+<div style="display: {{isPanelHorizontal()}};">
+    <table style="width: min-content; padding-left: 10px;">
+        <tr><td style="vertical-align:top; width: min-content;">
+            <locate-panel></locate-panel>
+            <mat-divider></mat-divider>
+            <action-panel></action-panel>
+            <mat-divider></mat-divider>
+        </td>
+        <td style="vertical-align:top; width: min-content;">
+            <zooms-panel></zooms-panel>
+            <mat-divider></mat-divider>
+            <reticles-panel></reticles-panel>
+            <mat-divider></mat-divider>
+        </td></tr>
+    </table>
+</div>

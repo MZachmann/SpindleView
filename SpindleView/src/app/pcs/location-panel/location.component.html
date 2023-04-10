@@ -1,0 +1,53 @@
+
+<mat-expansion-panel       
+  [expanded]="expandedPanel"
+  (opened)="updatePanel(true)"
+  (closed)="updatePanel(false)">
+  <mat-expansion-panel-header style="height: auto; font-weight: 500; margin-top: 5px; margin-bottom: 5px;">
+    <mat-panel-title>
+      Position
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <mat-divider></mat-divider>
+  <mat-divider></mat-divider>
+
+<div class="short-holder">
+<div class="short-hd">Center<br></div>
+<div class="short">
+  {{PosnA}}<br>
+  {{PosnB}}<br>
+  {{PosnZ}}
+</div>
+<div class="short-hd">
+Mouse<br></div>
+<div class = "short">
+  {{PosnX}}<br>
+{{PosnY}}
+</div>
+<div class="short-hd">{{MeasureMode}}<br></div>
+</div>
+<mat-button-toggle-group >
+  <div class="grid-square" >
+    <mat-button-toggle class="item11" value="1" 
+    matTooltip="Machine coordinates" matTooltipPosition="above" 
+    (click)="SelButton('m')" >
+      <mat-icon>precision_manufacturing</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle class="item12" value="2"  
+    matTooltip="Workspace coordinates" matTooltipPosition="right" 
+    (click)="SelButton('w')">
+      <mat-icon>handyman</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle class="item21" value="3"  
+    matTooltip="Measure X,Y distances from center" matTooltipPosition="below" 
+    (click)="SelButton('d')">
+      <mat-icon>difference</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle class="item22" value="4"  
+    matTooltip="Measure length,angle from center" matTooltipPosition="right" 
+    (click)="SelButton('r')">
+      <mat-icon>radar</mat-icon>
+    </mat-button-toggle>
+  </div>
+</mat-button-toggle-group>
+</mat-expansion-panel>

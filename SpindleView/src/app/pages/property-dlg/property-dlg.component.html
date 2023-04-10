@@ -1,0 +1,97 @@
+
+  <div style="height: 100%; width: 100%; ">
+  
+    <!-- Toolbar -->
+    <div class="toolbar" role="banner" >
+      <button mat-stroked-button (click)="OnGoBack()" style="position: absolute; left: 150px; top: 3px;"  >
+        <mat-icon>arrow_back_ios_new</mat-icon>
+        <mat-label>Back</mat-label>
+      </button>
+      <label style="position: absolute; left: center; top: 11px;">SpindleView</label>
+    </div>
+
+    <!-- Emulate the front-page grid container and use the second column
+        as an easy spacer / style guid  -->
+    <div class="grid-container" id="GridContainer" >
+  <mat-dialog-content style= "grid-column: 2 / 2; border: 2px solid black; padding: 19px; 
+          margin-left: 32px; margin-top: 38px; width: 90%; max-width: 800px; 
+          background-color: #f3f3f3;" >
+          <!-- Use a two-column table to have labels on left and entries on right -->
+    <table style="width: 90%;">
+      <tr><td></td><td>Camera Resolution: {{globals.VideoSize.x}}x{{globals.VideoSize.y}}</td></tr>
+      <tr><td></td><td><mat-divider style="height: 10px;"></mat-divider></td></tr>
+      <tr><td>Camera Center:</td><td>
+        <mat-form-field appearance="fill" style="width: 40%">
+          <mat-label>X</mat-label>
+          <input matInput placeholder="1.0" [(ngModel)]="CenterX" value="" (change)="OnChangeCenter()">
+        </mat-form-field>
+        <mat-form-field appearance="fill" style="width: 40%; margin-left: 10px;">
+          <mat-label>Y</mat-label>
+          <input matInput placeholder="1.0" [(ngModel)]="CenterY" value="" (change)="OnChangeCenter()">
+        </mat-form-field>
+        &nbsp;Pixels
+      </td></tr>
+        
+        <tr><td>Spindle Distance:</td><td>
+          <mat-form-field appearance="fill" style="width: 40%">
+            <mat-label>X</mat-label>
+            <input matInput placeholder="1.0" [(ngModel)]="SpindleX" value="" (change)="OnChangeSpindle()">
+            <mat-hint>Distance from the camera </mat-hint>
+          </mat-form-field>
+            <mat-form-field appearance="fill" style="width: 40%; margin-left: 10px;">
+              <mat-label>Y</mat-label>
+              <input matInput placeholder="1.0" [(ngModel)]="SpindleY" value="" (change)="OnChangeSpindle()">
+              <mat-hint>center to the spindle center</mat-hint>
+            </mat-form-field>&nbsp;Inches
+          </td></tr>
+          <p></p>
+          <tr><td>Resolution:</td><td>
+            <mat-form-field appearance="fill" style="width: 70%">
+              <mat-label></mat-label>
+              <input matInput placeholder="1.0" [(ngModel)]="Resolution" value="" (change)="OnChangeResolution()">
+            </mat-form-field>&nbsp;dpi</td></tr>
+            
+                  <tr><td>Focus Height:</td><td>
+      <mat-form-field appearance="fill" style="width: 70%">
+        <mat-label></mat-label>
+        <input matInput placeholder="1.0" [(ngModel)]="FocusHeight" value="" (change)="OnChangeFocusHeight()">
+        <mat-hint>The machine Z value to focus the camera on the bed surface</mat-hint>
+      </mat-form-field>&nbsp;Inches</td></tr>
+      <p></p>
+      <tr><td>Camera URL:</td><td>
+      <mat-form-field appearance="fill" style="width: 90%">
+        <mat-label></mat-label>
+        <mat-hint>The full URL of the camera stream</mat-hint>
+      <input matInput placeholder="" [(ngModel)]="VideoUrl" value="" (change)="OnChangeVideoUrl()">
+    </mat-form-field></td></tr>
+    <tr><td>Camera Rotation:</td><td>
+      <mat-form-field appearance="fill" style="width: 90%">
+        <mat-label></mat-label>
+        <mat-hint>How much to rotate the image</mat-hint>
+      <mat-select [(ngModel)]="VideoRotate"><mat-option *ngFor="let rotate of rotations" 
+        [value]="rotate.value" >
+        {{rotate.viewValue}}</mat-option></mat-select>
+    </mat-form-field></td></tr>
+    <p></p>
+    <tr><td>Machine URL:</td><td>
+    <mat-form-field appearance="fill" style="width: 90%">
+      <mat-label></mat-label>
+      <mat-hint>The URL to post GCode</mat-hint>
+      <input matInput placeholder="" [(ngModel)]="MachineUrl" value="" (change)="OnChangeMachineUrl()">
+  </mat-form-field>
+
+</td>
+</tr>
+<tr><td></td><td><mat-divider style="height: 10px; margin-top: 20px; margin-bottom: 20px;"></mat-divider></td></tr>
+<tr><td>
+</td><td>
+  <!-- here use the hidden input field so we can do a file save... -->
+  <button type="button" mat-raised-button (click)="fileInput.click()">Save As...</button>
+  <input hidden (change)="DoSaveAs($event)" #fileInput type="file" >
+  <button mat-flat-button ></button>
+  <button mat-raised-button (click)="loadfileInput.click()">Load From...</button>
+  <input hidden (change)="DoLoadFrom($event)" #loadfileInput type="file" >
+</td></tr>
+</table>
+</mat-dialog-content>
+    </div>

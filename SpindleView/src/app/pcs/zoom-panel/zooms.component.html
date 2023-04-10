@@ -1,0 +1,51 @@
+
+<mat-expansion-panel  [expanded]="expandPanel"
+(opened)="updatePanel(true)"
+(closed)="updatePanel(false)">
+  <mat-expansion-panel-header style="height: auto; font-weight: 500; margin-top: 5px; margin-bottom: 5px;">
+    <mat-panel-title>
+      Zoom
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <mat-divider></mat-divider>
+  <mat-divider></mat-divider>
+
+<!-- <div class="short-holder">
+  <div class="short-hd">Zoom<br></div></div>    -->
+   
+   <table style="width: 100%; padding-left: 10px;">
+     <tr><td >
+       <mat-slider vertical thumbLabel tickInterval="1" min = ".25" max = "4" step = "0.25" (input)="ZoomSlider = $event.value ?? 0 " 
+       [value]="ZoomSlider" (change)="onChangeSlider()" > 
+
+       </mat-slider>  </td>
+      <td>      <button class="mdc-icon-button material-icons" (click)="ZoomChange(.25)">
+        add
+      </button><br><br>
+<p>{{ZoomSlider}}</p>      <button class="mdc-icon-button material-icons" (click)="ZoomChange(-.25)">
+  remove
+</button>
+</td></tr></table>
+<div class="grid-square">
+    <button mat-button class="item11"  
+          matTooltip="Center the camera center" matTooltipPosition="above" 
+          (click)="SelButton('m')">
+        <mat-icon>filter_center_focus</mat-icon>
+    </button>
+    <button mat-button class="item12" 
+    matTooltip="Center the click spot" matTooltipPosition="right" 
+    (click)="SelButton('w')">
+        <mat-icon>adjust</mat-icon>
+      </button>
+      <button mat-button class="item21"  
+      matTooltip="Fit height" matTooltipPosition="below" 
+      (click)="SelButton('d')">
+        <mat-icon>vertical_align_center</mat-icon>
+      </button>
+      <button mat-button class="item22" 
+      matTooltip="Fit width" matTooltipPosition="right" 
+      (click)="SelButton('r')">
+        <mat-icon>horizontal_distribute</mat-icon>
+      </button>
+  </div>
+</mat-expansion-panel>

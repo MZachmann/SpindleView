@@ -1,0 +1,24 @@
+
+<button mat-button material-icons class="boxy"
+     matTooltip="Move the camera center to the click location" matTooltipPosition="right"
+     (click)="SelButton('m')">
+    <mat-icon>precision_manufacturing</mat-icon><br>
+    Move to Click
+  </button>
+  <button mat-button material-icons class="boxy"  
+      matTooltip="Move the spindle tip to the center view spot" matTooltipPosition="right" 
+      (click)="SelButton('d')">
+    <mat-icon>colorize</mat-icon><br>
+    Drill at Center
+  </button>
+  <div class="boxy" style="text-align: center; background-color: transparent;">
+    <textarea style="margin-top: 6px; width: 90%; max-lines: 1; resize: none; text-align: center;" 
+    rows="1" [(ngModel)]="TextArea" (change)="OnChangeMaterialHeight()"  >1.0</textarea><br>
+    <label style="font-size: 14px; font-weight: 600; line-height: 20%;">Material<br> Height</label>
+  <button mat-button material-icons 
+        matTooltip="Raise or lower to the focus + material height" matTooltipPosition="right"
+        style="width: 100%; margin-top: 10px; background-color:#efe;"  (click)="SelButton('f')">
+    <mat-icon>filter_center_focus</mat-icon>
+    <b>Focus</b>
+  </button>
+</div>

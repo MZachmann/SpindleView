@@ -1,0 +1,32 @@
+
+  <div style="height: 100%; width: 100%; background-color: {{BackColor}}">
+  
+  <!-- Toolbar -->
+  <div class="toolbar" role="banner" >
+    <button mat-button [matMenuTriggerFor]="menu" style="position: absolute; left: 20px; top: 3px;">
+      <mat-icon>menu</mat-icon>
+      <mat-label> Menu</mat-label>
+    </button>
+    <mat-menu #menu="matMenu"  >
+      <button mat-menu-item (click)="swapVertical()">
+        <mat-icon>align_vertical_center</mat-icon>
+        <mat-label>{{ScreenOrient}}</mat-label>
+      </button>
+      <button mat-menu-item (click)="swapPalette()">
+        <mat-icon>palette</mat-icon>
+        <mat-label>{{ScreenColors}}</mat-label>
+      </button>
+    </mat-menu>
+    <button mat-stroked-button [routerLink]=" ['../property-page']" style="position: absolute; left: 100pt; top: 3px;"  >
+      <mat-icon>settings</mat-icon>
+      <mat-label> Settings</mat-label>
+    </button>
+    <label style="position: absolute; left: center; top: 11px;">SpindleView</label>
+  </div>
+  
+  <!-- <div class="grid-container" style="height: 80%;" id="GridContainer" >
+    <div class="item1" ><side-panel></side-panel></div>
+    <div class="item2" ><video-view></video-view></div>
+  </div> -->
+
+  <table  ><td style="vertical-align:top; width: min-content"><side-panel></side-panel></td><td><video-view></video-view></td></table>
