@@ -109,5 +109,8 @@
       }
     }
   },
-  "defaultProject": "SpindleView"
+  "defaultProject": "SpindleView",
+  "cli": {
+    "analytics": false
+  }
 }

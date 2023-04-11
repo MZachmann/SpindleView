@@ -15,4 +15,10 @@ SpindleView is written in TypeScript. It relies on NPM (Node Package Manager). B
 
 The SpindleView writeup is here: https://medium.com/home-wireless/spindleview-cnc-camera-software-a647393fb379
 
+How to build the application in windows->
+
+
+cd SpindleView
+npm install
+npm run build
 

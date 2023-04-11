@@ -25,6 +25,11 @@ export class ZoomsComponent implements OnInit {
     this.ZoomSlider = this.cfg.globals.ZoomAmount;
   }
 
+  onInputSlider()
+  {
+    this.onChangeSlider() // it should already be done, but if not...
+  }
+
   onChangeSlider()
   {
     this.cfg.globals.ZoomAmount = this.ZoomSlider;

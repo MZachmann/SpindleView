@@ -15,14 +15,14 @@
    
    <table style="width: 100%; padding-left: 10px;">
      <tr><td >
-       <mat-slider vertical thumbLabel tickInterval="1" min = ".25" max = "4" step = "0.25" (input)="ZoomSlider = $event.value ?? 0 " 
-       [value]="ZoomSlider" (change)="onChangeSlider()" > 
-
+       <mat-slider vertical thumbLabel tickInterval="1" min = ".25" max = "4" step = "0.25" > 
+        <input matSliderThumb [(value)]="ZoomSlider"  (input)="onInputSlider()" (change)="onChangeSlider()" >
        </mat-slider>  </td>
       <td>      <button class="mdc-icon-button material-icons" (click)="ZoomChange(.25)">
         add
       </button><br><br>
-<p>{{ZoomSlider}}</p>      <button class="mdc-icon-button material-icons" (click)="ZoomChange(-.25)">
+<p>{{ZoomSlider}}</p>
+      <button class="mdc-icon-button material-icons" (click)="ZoomChange(-.25)">
   remove
 </button>
 </td></tr></table>

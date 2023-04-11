@@ -1,4 +1,3 @@
-import { asLiteral } from '@angular/compiler/src/render3/view/util';
 import { Component, Inject } from '@angular/core';
 import { ConfigurationService } from 'src/app/services/configuration';
 
