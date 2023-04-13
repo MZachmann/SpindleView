@@ -1,15 +1,15 @@
-
-<button mat-button material-icons class="boxy"
+<div>
+  <label  class="iconlabel">Move to Click</label>
+  <button mat-button material-icons class="boxy"
      matTooltip="Move the camera center to the click location" matTooltipPosition="right"
      (click)="SelButton('m')">
-    <mat-icon>precision_manufacturing</mat-icon><br>
-    Move to Click
-  </button>
+     <mat-icon>colorize</mat-icon><br>
+    </button>
+  <label class="iconlabel">Drill at Center</label>
   <button mat-button material-icons class="boxy"  
       matTooltip="Move the spindle tip to the center view spot" matTooltipPosition="right" 
       (click)="SelButton('d')">
-    <mat-icon>colorize</mat-icon><br>
-    Drill at Center
+        <mat-icon>precision_manufacturing</mat-icon><br>
   </button>
   <div class="boxy" style="text-align: center; background-color: transparent;">
     <textarea style="margin-top: 6px; width: 90%; max-lines: 1; resize: none; text-align: center;" 
@@ -21,4 +21,5 @@
     <mat-icon>filter_center_focus</mat-icon>
     <b>Focus</b>
   </button>
+</div>
 </div>

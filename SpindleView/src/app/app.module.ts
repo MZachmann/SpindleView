@@ -67,7 +67,7 @@ import {MatMenuModule} from '@angular/material/menu';
   providers: [
     CommService,
     ConfigurationService,
-    [{provide: APP_BASE_HREF, useValue : '/spindle-view/' }],
+    [{provide: APP_BASE_HREF, useValue : '/' }],
   ],
   bootstrap: [AppComponent]
 })
