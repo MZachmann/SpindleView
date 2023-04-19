@@ -22,3 +22,5 @@ cd SpindleView
 npm install
 npm run build
 
+<i>Comment</i>: the latest version of angular changes the ui controls dramatically. The current code compiles and runs but spacing is just wrong in a number of places.
+
