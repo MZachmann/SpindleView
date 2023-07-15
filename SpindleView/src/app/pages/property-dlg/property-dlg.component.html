@@ -18,7 +18,7 @@
           background-color: #f3f3f3;" >
           <!-- Use a two-column table to have labels on left and entries on right -->
     <table style="width: 90%;">
-      <tr><td></td><td>Camera Resolution: {{globals.VideoSize.x}}x{{globals.VideoSize.y}}</td></tr>
+      <tr><td></td><td>Camera Resolution: {{VideoSize.x}}x{{VideoSize.y}}</td></tr>
       <tr><td></td><td><mat-divider style="height: 10px;"></mat-divider></td></tr>
       <tr><td>Camera Center:</td><td>
         <mat-form-field appearance="fill" style="width: 40%">
@@ -86,8 +86,9 @@
 <tr><td>
 </td><td>
   <!-- here use the hidden input field so we can do a file save... -->
-  <button type="button" mat-raised-button (click)="fileInput.click()">Save As...</button>
-  <input hidden (change)="DoSaveAs($event)" #fileInput type="file" >
+  <!-- <button type="button" mat-raised-button (click)="fileInput.click()">Save As...</button>
+  <input hidden (change)="DoSaveAs($event)" #fileInput type="file" >-->
+  <button type="button" mat-raised-button (click)="DoConfSave()">Save</button>
   <button mat-flat-button ></button>
   <button mat-raised-button (click)="loadfileInput.click()">Load From...</button>
   <input hidden (change)="DoLoadFrom($event)" #loadfileInput type="file" >

@@ -3,6 +3,7 @@ import { ConfigurationService } from 'src/app/services/configuration';
 import { Router } from '@angular/router';
 import { Globals, GlobalInfo } from 'src/app/models/globals';
 import { saveAs } from 'file-saver';
+import { Point } from 'src/app/models/smallclasses'
 
 interface RotationAmt {
   value: string;
@@ -21,20 +22,14 @@ export class PropertyDlgComponent implements OnInit {
   public FocusHeight : string = "1.0";
   public VideoUrl : string = "http://zerocam3.local/?action=stream";
   public MachineUrl : string = "http://duet3mill.local";
-  public CenterX : string;
-  public CenterY : string;
-  public SpindleX : string;
-  public SpindleY : string;
-  public Resolution : string;
-  public VideoRotate : string;
-  private _globals: Globals;
-  public get globals(): Globals {
-    return this._globals;
-  }
-  public set globals(value: Globals) {
-    this._globals = value;
-  }
-
+  public CenterX : string = "";
+  public CenterY : string = "";
+  public SpindleX : string = "";
+  public SpindleY : string = "";
+  public Resolution : string = "";
+  public VideoRotate : string = "";
+  public VideoSize : Point = new Point(0,0);
+  
   rotations: RotationAmt[] = [
     {value: '0', viewValue: 'None'},
     {value: '90', viewValue: '90 degrees'},
@@ -45,6 +40,10 @@ export class PropertyDlgComponent implements OnInit {
   constructor(@Inject(ConfigurationService) confServe : ConfigurationService, private router : Router)
   {
     this.cfg = confServe;
+    this.readGlobals();
+ }
+
+ readGlobals() : void {
     let glob = this.cfg.globals;
     this.CenterX = glob.VideoCenter.x.toString();
     this.CenterY = glob.VideoCenter.y.toString();
@@ -54,7 +53,7 @@ export class PropertyDlgComponent implements OnInit {
     this.VideoRotate = glob.VideoRotation.toString();
     this.MachineUrl = glob.DwcUrl;
     this.VideoUrl = glob.VideoUrl;
-    this._globals = glob;
+    this.VideoSize = glob.VideoSize;
  }
 
   ngOnInit(): void {
@@ -136,10 +135,10 @@ export class PropertyDlgComponent implements OnInit {
     this.SetDirty();
   }
 
-  writeTextFile(file : File, text : string)
+  writeTextFile(fname: string, text : string)
   {
       let myfile = new Blob([text], { type: 'text/plain;charset=utf-8' });
-      saveAs(myfile, file.name);
+      saveAs(myfile, fname);
   }
 
   getNewFileHandle() : string {
@@ -176,24 +175,44 @@ export class PropertyDlgComponent implements OnInit {
     const ele = ev.target as HTMLInputElement;
     const files = ele.files as FileList;
     let txt = JSON.stringify(this.cfg.globals);
-    this.writeTextFile(files[0], txt);
+    this.writeTextFile(files[0].name, txt);
   }
 
-  ParseTheJson(txt: string | ArrayBuffer | null)
+    // parse the json globals input and save it
+  ParseTheJsonGlobal(txt: string | ArrayBuffer | null)
   {
+    let gb = {}
+    console.log('parsing json')
     let txts = txt as string;
     if( txts != null)
     {
-      const gb = JSON.parse(txts);
-      this.cfg.updateObject(GlobalInfo.GLOBALS_KEY, gb);
+      gb = JSON.parse(txts);
+      console.log( JSON.stringify(gb))
+      if( gb != null)
+      {
+        // place it into the saved data temporarily to use the autoupdate stuff
+        this.cfg.saveObject(GlobalInfo.GLOBALS_KEY, gb)
+        // use and save it for real
+        this.cfg.useSavedGlobals();
+        // update displayed values
+        this.readGlobals();
+      }
     }
+  }
+
+  DoConfSave()
+  {
+    console.log('saving file')
+    let txt = JSON.stringify(this.cfg.globals);
+    this.writeTextFile("SpindleConf.cnf", txt);
   }
 
   DoLoadFrom(ev: Event) : void
   {
+    console.log('loading from')
     const ele = ev.target as HTMLInputElement;
     const files = ele.files as FileList;
-    this.readTextFile(files[0], (txt) => this.ParseTheJson(txt));
+    this.readTextFile(files[0], (txt) => this.ParseTheJsonGlobal(txt));
   }
 
 

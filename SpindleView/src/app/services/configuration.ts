@@ -29,12 +29,19 @@ export class ConfigurationService
 
     _initialize()
     {
+        this.useSavedGlobals()
+    }
+
+    useSavedGlobals()
+    {
         if ( ! this.updateObject(GlobalInfo.GLOBALS_KEY, this.globals))
         {
             GlobalInfo.SaveGlobals(this);
         }
     }
 
+    // we want to take the new default globals and read any
+    // preset global values into it
     public updateObject(key : string, data : any) : boolean
     {
         let lserve = this.lclServer;
