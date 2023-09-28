@@ -1,5 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ConfigurationService } from 'src/app/services/configuration';
+import { DebugUtil } from '../../utility/DebugUtil';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'front-page',
@@ -12,7 +14,7 @@ export class FrontPageComponent implements OnInit {
   public BackColor : string = "white";
   public ScreenColors : string = "";
   
-  constructor(@Inject(ConfigurationService) confServe : ConfigurationService)
+  constructor(@Inject(ConfigurationService) confServe : ConfigurationService, private router : Router)
   {
     this.cfg = confServe;
     this.setVerticalPrompt();
@@ -20,13 +22,18 @@ export class FrontPageComponent implements OnInit {
   }
 
   ngOnInit(){
-  
+    DebugUtil.IfConsole("Initializing front-page component.");  
   }
 
   swapVertical() {
     this.cfg.globals.IsIconsVertical = !this.cfg.globals.IsIconsVertical;
     this.setVerticalPrompt();
     this.cfg.globalinfo.isGlobalsDirty = true;
+  }
+
+  toPropPage() {
+    DebugUtil.IfConsole("Go to property page.");  
+    this.router.navigate(['property-page']);
   }
 
   swapPalette() {

@@ -70,7 +70,7 @@ export class PropertyDlgComponent implements OnInit {
       this.cfg.globals.VideoRotation = x;
     }
     GlobalInfo.SaveGlobals(this.cfg);
-    this.router.navigate(['front-page']);
+    this.router.navigate(['']);
   }
 
   private SetDirty()

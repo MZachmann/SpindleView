@@ -4,12 +4,11 @@ import { FrontPageComponent } from './pages/front-page/front-page.component';
 import { PropertyDlgComponent } from './pages/property-dlg/property-dlg.component';
 
 const routes: Routes = [
-  { path: '', component: FrontPageComponent },
   { path: 'front-page', component: FrontPageComponent },
-  { path: 'pages/front-page', component: FrontPageComponent },
   { path: 'property-page', component: PropertyDlgComponent },
-  { path: 'pages/property-page', component: PropertyDlgComponent }
-];
+  { path: '', component: FrontPageComponent },
+  { path: '*', component: FrontPageComponent },
+]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

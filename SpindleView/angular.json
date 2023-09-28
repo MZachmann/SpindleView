@@ -28,7 +28,9 @@
             "inlineStyleLanguage": "less",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/front-page.html",
+              "src/property-page.html"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",

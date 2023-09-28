@@ -17,7 +17,7 @@
         <mat-label>{{ScreenColors}}</mat-label>
       </button>
     </mat-menu>
-    <button mat-stroked-button [routerLink]=" ['../property-page']" style="position: absolute; left: 100pt; top: 3px;"  >
+    <button mat-stroked-button (click)="toPropPage()" style="position: absolute; left: 100pt; top: 3px;"  >
       <mat-icon>settings</mat-icon>
       <mat-label> Settings</mat-label>
     </button>
