@@ -55,6 +55,19 @@ export class ZoomsComponent implements OnInit {
     this.onChangeSlider();
   }
 
+  FormatLabel(value: number | null) : string {
+    if (!value) {
+      return "0";
+    }
+
+    if (value >= 1000) {
+      return Math.round(value / 1000) + 'k';
+    }
+
+    return String(value);
+  }
+
+
 
       // gui pick a mode
   SelButton( who : string)

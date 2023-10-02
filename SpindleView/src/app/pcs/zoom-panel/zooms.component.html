@@ -14,18 +14,23 @@
   <div class="short-hd">Zoom<br></div></div>    -->
    
    <table style="width: 100%; padding-left: 10px;">
+    <tr>
+      <td>
+        <button class="mdc-icon-button material-icons" (click)="ZoomChange(-.25)">
+          remove
+        </button>
+        {{ZoomSlider}}
+        <button class="mdc-icon-button material-icons" (click)="ZoomChange(.25)">
+          add
+        </button>
+</td></tr>
      <tr><td >
-       <mat-slider vertical thumbLabel tickInterval="1" min = ".25" max = "4" step = "0.25" > 
+       <mat-slider thumbLabel tickInterval="1" min = ".25" max = "4" step = "0.25" 
+            [displayWith]="FormatLabel" > 
         <input matSliderThumb [(value)]="ZoomSlider"  (input)="onInputSlider()" (change)="onChangeSlider()" >
-       </mat-slider>  </td>
-      <td>      <button class="mdc-icon-button material-icons" (click)="ZoomChange(.25)">
-        add
-      </button><br><br>
-<p>{{ZoomSlider}}</p>
-      <button class="mdc-icon-button material-icons" (click)="ZoomChange(-.25)">
-  remove
-</button>
-</td></tr></table>
+       </mat-slider>  
+      </td></tr>
+    </table>
 <div class="grid-square">
     <button mat-button class="item11"  
           matTooltip="Center the camera center" matTooltipPosition="above" 
