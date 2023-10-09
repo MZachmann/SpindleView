@@ -15,12 +15,13 @@ SpindleView is written in TypeScript. It relies on NPM (Node Package Manager). B
 
 The SpindleView writeup is here: https://medium.com/home-wireless/spindleview-cnc-camera-software-a647393fb379
 
-How to build the application in windows->
+How to build the application ->
 
-
-cd SpindleView
-npm install
+// go to the project subfolder<br>
+cd SpindleView<br>
+// install the npm requirements<br>
+npm install<br>
+// run the build script<br>
 npm run build
 
-<i>Comment</i>: the latest version of angular changes the ui controls dramatically. The current code compiles and runs but spacing is just wrong in a number of places.
 

@@ -29,6 +29,7 @@ export class PropertyDlgComponent implements OnInit {
   public Resolution : string = "";
   public VideoRotate : string = "";
   public VideoSize : Point = new Point(0,0);
+  public IsMetric : boolean = false;
   
   rotations: RotationAmt[] = [
     {value: '0', viewValue: 'None'},
@@ -54,6 +55,7 @@ export class PropertyDlgComponent implements OnInit {
     this.MachineUrl = glob.DwcUrl;
     this.VideoUrl = glob.VideoUrl;
     this.VideoSize = glob.VideoSize;
+    this.IsMetric = glob.IsMetric;
  }
 
   ngOnInit(): void {
@@ -132,6 +134,12 @@ export class PropertyDlgComponent implements OnInit {
   OnChangeMachineUrl()
   {
     this.cfg.globals.DwcUrl = this.MachineUrl;
+    this.SetDirty();
+  }
+
+  OnChangeIsMetric()
+  {
+    this.cfg.globals.IsMetric = this.IsMetric;
     this.SetDirty();
   }
 

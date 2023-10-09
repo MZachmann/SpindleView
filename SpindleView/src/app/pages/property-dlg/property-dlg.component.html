@@ -72,6 +72,12 @@
         [value]="rotate.value" >
         {{rotate.viewValue}}</mat-option></mat-select>
     </mat-form-field></td></tr>
+    <tr><td>Metric Display:</td><td>
+      <mat-form-field appearance="fill" style="width: 90%">
+        <mat-label></mat-label>
+        <mat-hint>Display metric if true, imperial if false.</mat-hint>
+        <input matInput placeholder="" [(ngModel)]="IsMetric" value="" (change)="OnChangeIsMetric()">
+    </mat-form-field></td></tr>
     <p></p>
     <tr><td>Machine URL:</td><td>
     <mat-form-field appearance="fill" style="width: 90%">

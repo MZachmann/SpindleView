@@ -93,6 +93,8 @@ export class Globals
         public IsExpandZoom : boolean = true;
         public IsExpandReticles : boolean = true;
         public IsIconsVertical : boolean = false;
+        public IsMetric : boolean = false;
+        
         public ColorPalette : string = "Light";
 
         public DeviceName : string= "";
