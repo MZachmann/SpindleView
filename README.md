@@ -24,4 +24,6 @@ npm install<br>
 // run the build script<br>
 npm run build
 
+## Release - distribution files
+The set of distribution files are in the release folder. This folder is manually updated by me when the code updates. It copies the dist\spindle-view folder created by build.
 
