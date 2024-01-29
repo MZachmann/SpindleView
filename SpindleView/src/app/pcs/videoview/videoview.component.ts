@@ -15,8 +15,11 @@ import { ZoomUtil } from 'src/app/utility/ZoomUtil';
 export class VideoViewComponent implements OnInit, OnDestroy  {
   public Filter : string;
   private cfg : ConfigurationService;
+  private isRightDown : boolean = false;
+  private lastRight : Point = new Point(0,0);
     // create member that holds the function reference so we know 'this' on entry
   protected moveEventListener: EventListener;   
+  protected resizeEventListener: EventListener;   
   private SaveTime : number;
   public VideoUrl : string = "";
   public rotator : string = "rotate90";
@@ -26,6 +29,7 @@ export class VideoViewComponent implements OnInit, OnDestroy  {
       this.Filter = '';
       this.cfg = confServe;
       this.moveEventListener = (x : Event) => {this.onMouseMove(x as MouseEvent);}
+      this.resizeEventListener = (x : Event) => {this.RecalcSize();}
       this.SaveTime = Date.now();
       if( this.cfg.globals.VideoRotation < 45) {
         this.rotator = 'rotate0';
@@ -47,7 +51,18 @@ export class VideoViewComponent implements OnInit, OnDestroy  {
       // let x = document.getElementById("ImgView");
       // x?.addEventListener('mousemove', this.moveEventListener);
       let x = document.getElementById("ReticleView");
-      x?.addEventListener('mousemove', this.moveEventListener);
+      if(x) {
+        x?.addEventListener('mousemove', this.moveEventListener);
+        DebugUtil.IfConsole("Attach move");
+      }
+    
+      // let y = document.getElementById("GridContainer");
+      // if(y)
+      {
+        window.addEventListener('resize', this.resizeEventListener);
+        DebugUtil.IfConsole("Attach resize");
+      }
+
       this.cfg.globalinfo.hasChangedZoom.subscribe(() => this.SetZoomAmount());
       this.CalcSize();
       this.VideoUrl = this.cfg.globals.VideoUrl;
@@ -55,7 +70,13 @@ export class VideoViewComponent implements OnInit, OnDestroy  {
 
     OnImgLoaded()
     {
+      DebugUtil.IfConsole("image loaded");
       this.cfg.globalinfo.hasChangedZoom.next(true);  // ping the zoom changer
+      setTimeout(() => {
+        // Code to be executed after the delay
+        this.cfg.globalinfo.hasChangedZoom.next(true);  // ping the zoom changer
+        this.cfg.globalinfo.hasChangedCoords.next(true);  // move the click spot by redrawing the reticle
+      }, 2000 );
     }
 
     ngOnDestroy()
@@ -64,6 +85,8 @@ export class VideoViewComponent implements OnInit, OnDestroy  {
       // x?.removeEventListener('mousemove', this.moveEventListener);
       let x = document.getElementById("ReticleView");
       x?.removeEventListener('mousemove', this.moveEventListener);
+      //let y = document.getElementById("GridContainer");
+      window.removeEventListener('resize', this.resizeEventListener);
       //this.cfg.globalinfo.hasChangedZoom.unsubscribe();
     }
 
@@ -71,7 +94,27 @@ export class VideoViewComponent implements OnInit, OnDestroy  {
         let ginfo = this.cfg.globalinfo;
         ginfo.MousePt = ZoomUtil.DisplayToMouse(this.cfg, new Point(event.offsetX, event.offsetY));
         ginfo.hasChangedCoords.next(true);
-        // every two seconds check to save globals
+        let didPing = (event.buttons & 2) || ((event.buttons & 1) && event.shiftKey);
+        if (didPing) {
+          if (this.isRightDown) {
+            let xo = - this.cfg.globals.ZoomAmount * (ginfo.MousePt.x - this.lastRight.x);
+            let yo = this.cfg.globals.ZoomAmount * (ginfo.MousePt.y - this.lastRight.y);
+            let wdw = document.getElementById("VideoContainer") as HTMLImageElement;
+            if (wdw != null) {
+              wdw.scrollBy(xo, yo);
+              DebugUtil.IfConsole("scroll by " + xo + " . " + yo);
+            }
+          }
+
+          this.isRightDown = true;
+          this.lastRight = ginfo.MousePt;
+          // the right mouse button is down, try to scroll to it(?)
+          DebugUtil.IfConsole('buttons=' + event.buttons);
+        }
+        else {
+          this.isRightDown = false;
+        }
+          // every two seconds check to save globals
         if( this.SaveTime < (Date.now()-2000)) {
           if(ginfo.isGlobalsDirty)
           {
@@ -83,6 +126,11 @@ export class VideoViewComponent implements OnInit, OnDestroy  {
     
     setClickPt(event : MouseEvent) {
       let ginfo = this.cfg.globalinfo;
+
+        if (event.buttons & 2) {
+          // the right mouse button is down, try to scroll to it(?)
+          DebugUtil.IfConsole('right buttons=' + event.buttons);
+        }
       // set x and y values
       ginfo.ClickPt = ZoomUtil.DisplayToMouse(this.cfg, new Point(event.offsetX, event.offsetY));
       ginfo.hasChangedCoords.next(true);
@@ -91,13 +139,45 @@ export class VideoViewComponent implements OnInit, OnDestroy  {
           // also move if shift key is down
         }
       }
-
+      
+      RecalcSize() {
+        DebugUtil.IfConsole("resizing window")
+        this.CalcSize()
+      }
+      
       CalcSize() {
         let y = document.getElementById("VideoContainer") as HTMLDivElement;
         let a = document.getElementById("GridContainer") as HTMLDivElement;
         if( y!= null && a != null) {
-          y.style.width = (a.scrollWidth-150).toString() + "px";
-          y.style.height = a.scrollHeight.toString() + "px";
+          let u = document.getElementById("side_panel");
+          let clw = 0;
+          if(u) {
+            clw = u?.offsetWidth ?? 0;
+            DebugUtil.IfConsole("calc side width")
+          }
+          // don't be larger than the actual data
+          let ywidth = (a.clientWidth - clw);
+          let yheight = (a.clientHeight);
+          let z = this.cfg.globals.ZoomAmount;
+          let gl = this.cfg.globals.VideoSize;
+          if(gl.x > 0 && gl.y > 0) {
+            ywidth = Math.min(z*gl.x, ywidth);
+            yheight = Math.min(z*gl.y, yheight);
+          }
+          // remove scroll bar dimensions if img fills window
+          let iv = document.getElementById("ImgView");
+          if(iv && iv.offsetHeight > 0 && iv.offsetWidth > 0) {
+            if(z*gl.x > ywidth) {
+              ywidth -= iv.offsetWidth - iv.clientWidth;
+            }
+            if(z*gl.y > yheight) {
+              yheight -= iv.offsetHeight - iv.clientHeight;
+            }
+          }
+          
+          y.style.width = (1+ywidth).toString() + "px";
+          y.style.height = (1+yheight).toString() + "px";
+          DebugUtil.IfConsole("Resize to: " + y.style.width + "." + y.style.height);
         }        
       }
 
