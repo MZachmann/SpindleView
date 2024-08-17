@@ -81,11 +81,9 @@ export class VideoViewComponent implements OnInit, OnDestroy  {
 
     ngOnDestroy()
     {
-      // let x = document.getElementById("ImgView");
-      // x?.removeEventListener('mousemove', this.moveEventListener);
       let x = document.getElementById("ReticleView");
       x?.removeEventListener('mousemove', this.moveEventListener);
-      //let y = document.getElementById("GridContainer");
+
       window.removeEventListener('resize', this.resizeEventListener);
       //this.cfg.globalinfo.hasChangedZoom.unsubscribe();
     }
@@ -99,17 +97,17 @@ export class VideoViewComponent implements OnInit, OnDestroy  {
           if (this.isRightDown) {
             let xo = - this.cfg.globals.ZoomAmount * (ginfo.MousePt.x - this.lastRight.x);
             let yo = this.cfg.globals.ZoomAmount * (ginfo.MousePt.y - this.lastRight.y);
-            let wdw = document.getElementById("VideoContainer") as HTMLImageElement;
-            if (wdw != null) {
-              wdw.scrollBy(xo, yo);
-              DebugUtil.IfConsole("scroll by " + xo + " . " + yo);
+            if ( xo > 10 || yo > 10 || xo < -10 || yo < -10) {
+              let wdw = document.getElementById("VideoContainer") as HTMLImageElement;
+              if (wdw != null) {
+                wdw.scrollBy(xo, yo);
+                //DebugUtil.IfConsole("scroll by " + xo + " . " + yo);
+                this.lastRight = ginfo.MousePt;
+              }
             }
           }
 
           this.isRightDown = true;
-          this.lastRight = ginfo.MousePt;
-          // the right mouse button is down, try to scroll to it(?)
-          DebugUtil.IfConsole('buttons=' + event.buttons);
         }
         else {
           this.isRightDown = false;
@@ -125,19 +123,10 @@ export class VideoViewComponent implements OnInit, OnDestroy  {
       }
     
     setClickPt(event : MouseEvent) {
-      let ginfo = this.cfg.globalinfo;
-
-        if (event.buttons & 2) {
-          // the right mouse button is down, try to scroll to it(?)
-          DebugUtil.IfConsole('right buttons=' + event.buttons);
-        }
-      // set x and y values
-      ginfo.ClickPt = ZoomUtil.DisplayToMouse(this.cfg, new Point(event.offsetX, event.offsetY));
-      ginfo.hasChangedCoords.next(true);
-      ginfo.hasChangedZoom.next(true);  // move the click spot by redrawing the reticle
-        if(event.shiftKey) {
-          // also move if shift key is down
-        }
+        let ginfo = this.cfg.globalinfo;
+        // set x and y values
+        ginfo.ClickPt = ZoomUtil.DisplayToMouse(this.cfg, new Point(event.offsetX, event.offsetY));
+        ginfo.hasChangedCoords.next(true);
       }
       
       RecalcSize() {
